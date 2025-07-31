@@ -1,0 +1,36 @@
+name: release packages
+
+on:
+    push:
+        branches:
+            - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.ACTION_TOKEN }}
+                  fetch-depth: 0
+            - name: Setup pnpm and install dependencies
+              uses: ./tooling/github/setup
+            - name: Create Release Pull Request
+              id: changesets
+              uses: NaverPayDev/changeset-actions/publish@main
+              with:
+                  github_token: ${{ secrets.ACTION_TOKEN }}
+                  npm_token: ${{ secrets.NPM_TOKEN }}
+                  git_username: npayfebot
+                  git_email: npay.fe.bot@navercorp.com
+                  publish_script: pnpm release
+                  pr_title: '🚀 version changed packages'
+                  commit_message: '📦 bump changed packages version'
+                  create_github_release_tag: true
+                  formatting_script: pnpm run markdownlint:fix
+              env:
+                  GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
