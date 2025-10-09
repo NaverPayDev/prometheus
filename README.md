@@ -1,52 +1,179 @@
-# ts-monorepo-template
+# @naverpay/prometheus
 
-**@NaverPayDev/frontend**에서 제공하는 **TypeScript Monorepo Template**입니다. 이 템플릿은 Turbo, ESLint, Prettier, TypeScript와 같은 도구를 사용하여 Monorepo 프로젝트를 효율적으로 관리할 수 있도록 설계되었습니다.
+Prometheus 메트릭 수집 및 내보내기를 위한 TypeScript 라이브러리 모음입니다. PM2 클러스터링 환경에서의 메트릭 수집을 지원하며, Koa 및 Next.js 프레임워크와의 통합을 제공합니다.
 
----
+## 패키지 구조
 
-## 주요 특징
+이 모노레포는 다음과 같은 패키지들로 구성되어 있습니다:
 
-- **TypeScript**: 최신 JavaScript 개발을 위한 핵심 언어 지원.
-- **Monorepo 관리**: [Turbo](https://turbo.build/)를 활용한 빠르고 효율적인 작업 실행.
-- **Linting**: [ESLint](https://eslint.org/)로 코드 품질 관리.
-- **코드 포맷팅**: [Prettier](https://prettier.io/)로 일관된 코드 스타일 유지.
-- **Markdown Linting**: 문서의 표준을 준수하도록 설정.
-- **릴리스 관리**: [Changesets](https://github.com/changesets/changesets)로 간단한 버전 관리 및 배포.
-- **자동화**: [Lefthook](https://github.com/evilmartians/lefthook)과 lint-staged를 활용한 Git 훅 사전 설정.
-- **템플릿 활용성**: 개발 및 CI/CD 워크플로를 위한 사전 구성 스크립트 제공.
+### 📦 [@naverpay/prometheus-core](./packages/core)
+핵심 Prometheus 유틸리티 및 PM2 통합 기능을 제공하는 기본 패키지입니다.
 
----
+**주요 기능:**
+- Prometheus 히스토그램 및 게이지 메트릭 등록
+- PM2 프로세스 간 메트릭 수집 및 집계
+- Next.js 라우트 정규화
+- HTTP 상태 코드 그룹화
+- 기본 Node.js 메트릭 수집
 
-## 사전 요구 사항
+### 📦 [@naverpay/prometheus-koa](./packages/koa)
+Koa.js 프레임워크용 Prometheus 미들웨어 및 라우터를 제공합니다.
 
-- **Node.js**: 버전 `22.14.0`
-- **pnpm**: 버전 `10.13.1` (기본 패키지 매니저로 설정)
+**주요 기능:**
+- HTTP 요청 메트릭 수집 미들웨어
+- 메트릭 엔드포인트 라우터
+- API 트레이싱 미들웨어
+- 요청 경로 정규화 지원
 
-환경 확인:
+### 📦 [@naverpay/prometheus-next](./packages/next)
+Next.js 애플리케이션용 통합 서버 솔루션을 제공합니다.
+
+**주요 기능:**
+- 메트릭 수집이 통합된 Next.js 서버
+- 자동 라우트 패턴 매칭
+- PM2 클러스터 환경 지원
+
+## 설치
+
+각 패키지를 개별적으로 설치할 수 있습니다:
 
 ```bash
-node -v
-pnpm -v
+# 코어 패키지
+npm install @naverpay/prometheus-core
+
+# Koa 사용 시
+npm install @naverpay/prometheus-koa
+
+# Next.js 사용 시
+npm install @naverpay/prometheus-next
 ```
 
----
+## 빠른 시작
 
-## 설치 방법
+### Koa 애플리케이션
 
-1. **레포지토리 클론** 혹은 **use this template**:
+```typescript
+import Koa from 'koa'
+import { createKoaPrometheusExporter } from '@naverpay/prometheus-koa'
 
-   ```bash
-   git clone https://github.com/NaverPayDev/ts-monorepo-template.git
-   cd ts-monorepo-template
-   ```
+const app = new Koa()
 
-2. **의존성 설치**:
+const { middleware, router } = await createKoaPrometheusExporter({
+  pm2: true, // PM2 환경에서 실행 시
+  metricsPath: '/metrics',
+  collectDefaultMetrics: true,
+})
 
-   ```bash
-   pnpm install
-   ```
+app.use(middleware)
+app.use(router.routes())
 
----
+app.listen(3000)
+```
+
+### Next.js 애플리케이션
+
+```typescript
+import { createNextServerWithMetrics } from '@naverpay/prometheus-next'
+
+const server = await createNextServerWithMetrics({
+  pm2: true,
+  nextOptions: { dev: false },
+  metricsPath: '/metrics',
+})
+
+server.listen(3000)
+```
+
+## 메트릭 수집
+
+각 패키지는 다음과 같은 메트릭을 수집합니다:
+
+### HTTP 요청 메트릭
+- **메트릭명**: `http_request_duration_seconds`
+- **타입**: Histogram
+- **라벨**: `status_code`, `method`, `path`
+
+### API 요청 메트릭 (Koa API 트레이싱)
+- **메트릭명**: `http_api_request_duration_seconds`
+- **타입**: Histogram
+- **라벨**: `path`, `status`, `method`
+
+### 서비스 상태 메트릭
+- **메트릭명**: `up`
+- **타입**: Gauge
+- **설명**: 서비스 가용성 (1 = 실행 중, 0 = 중단)
+
+### 기본 Node.js 메트릭
+- CPU 사용률
+- 메모리 사용량
+- 이벤트 루프 지연
+- HTTP 요청 지속시간
+- 가비지 컬렉션 통계
+
+## PM2 클러스터 지원
+
+이 라이브러리는 PM2 클러스터 환경에서 여러 프로세스의 메트릭을 자동으로 집계합니다:
+
+1. 각 워커 프로세스가 자체 메트릭을 수집
+2. 메트릭 엔드포인트 요청 시 모든 프로세스의 메트릭을 수집
+3. Prometheus 표준에 따라 메트릭을 집계하여 반환
+
+## 고급 설정
+
+### 요청 바이패스
+
+특정 요청을 메트릭 수집에서 제외할 수 있습니다:
+
+```typescript
+const { middleware } = await createKoaPrometheusExporter({
+  pm2: true,
+  bypass: (context) => {
+    // 헬스체크 요청 제외
+    return context.path === '/health'
+  }
+})
+```
+
+### 경로 정규화
+
+동적 라우트를 그룹화하여 메트릭을 수집할 수 있습니다:
+
+```typescript
+const { middleware } = await createKoaPrometheusExporter({
+  pm2: true,
+  normalizePath: (context) => {
+    // /user/123 -> /user/:id
+    return context.path.replace(/\/\d+/g, '/:id')
+  }
+})
+```
+
+### 상태 코드 포맷팅
+
+상태 코드를 커스텀 형식으로 그룹화할 수 있습니다:
+
+```typescript
+const { middleware } = await createKoaPrometheusExporter({
+  pm2: true,
+  formatStatusCode: (context) => {
+    if (context.status >= 400) return 'error'
+    if (context.status >= 300) return 'redirect'
+    return 'success'
+  }
+})
+```
+
+## 라이센스
+
+이 프로젝트는 MIT 라이센스 하에 배포됩니다.
+
+## 기여하기
+
+버그 리포트, 기능 요청, 풀 리퀘스트를 환영합니다.
+
+## 지원
+
+문의사항이나 지원이 필요한 경우 이슈를 생성해 주세요.
 
 ## Package 추가하기
 
@@ -147,6 +274,3 @@ pnpm markdownlint:fix
 
 이 템플릿은 네이버 파이낸셜 유저플랫폼 산하 공통개발TF (@NaverPayDev/frontend)에 의해 관리되며, 해당 라이선스 정책을 따릅니다.
 
----
-
-`ts-monorepo-template`로 생산적인 Monorepo 개발 환경을 경험해보세요! 🎉
