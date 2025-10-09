@@ -1,0 +1,58 @@
+{
+    "name": "@naverpay/prometheus-core",
+    "version": "0.0.1",
+    "description": "Core utilities for Prometheus monitoring and metrics collection.",
+    "keywords": [
+        "prometheus",
+        "prometheus-exporter",
+        "prometheus-core"
+    ],
+    "author": "oneweek-lee",
+    "sideEffects": false,
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/esm/index.d.ts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.cts",
+                "default": "./dist/cjs/index.js"
+            }
+        },
+        "./package.json": "./package.json"
+    },
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/esm/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "pnpm clean && vite build",
+        "clean": "rm -rf dist"
+    },
+    "overrides": {
+        "vm2<3.9.17": "3.9.17"
+    },
+    "dependencies": {
+        "@naverpay/es-http-status-codes": "^0.0.4",
+        "glob": "^11.0.2",
+        "nanoid": "^5.1.5",
+        "prom-client": "^15.1.3"
+    },
+    "devDependencies": {
+        "@naverpay/pite": "catalog:",
+        "@naverpay/tsconfig": "workspace:*",
+        "@types/node": "catalog:",
+        "vite": "catalog:"
+    },
+    "peerDependencies": {
+        "pm2": ">=5.3.0 <6.0.0"
+    },
+    "packageManager": "pnpm@10.6.5",
+    "publishConfig": {
+        "registry": "https://repo.fin.navercorp.com/repository/npm-hosted/"
+    }
+}
