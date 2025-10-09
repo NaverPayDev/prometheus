@@ -1,0 +1,59 @@
+{
+    "name": "@naverpay/prometheus-koa",
+    "version": "1.0.0",
+    "description": "Koa middleware for Prometheus metrics integration.",
+    "keywords": [
+        "koa",
+        "prometheus",
+        "prometheus-exporter",
+        "prometheus-koa",
+        "prometheus-middleware"
+    ],
+    "author": "oneweek-lee",
+    "sideEffects": false,
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": {
+                "types": "./dist/esm/index.d.ts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.cts",
+                "default": "./dist/cjs/index.js"
+            }
+        },
+        "./package.json": "./package.json"
+    },
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/esm/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "pnpm clean && vite build",
+        "clean": "rm -rf dist"
+    },
+    "dependencies": {
+        "@naverpay/es-http-status-codes": "^0.0.4",
+        "@naverpay/prometheus-core": "workspace:*",
+        "on-finished": "catalog:"
+    },
+    "devDependencies": {
+        "@naverpay/pite": "catalog:",
+        "@naverpay/tsconfig": "workspace:*",
+        "@types/koa": "^2.13.5",
+        "@types/koa__router": "^12.0.4",
+        "@types/node": "catalog:",
+        "@types/on-finished": "catalog:",
+        "vite": "catalog:"
+    },
+    "peerDependencies": {
+        "@koa/router": ">=14.0.0"
+    },
+    "packageManager": "pnpm@10.6.5",
+    "publishConfig": {
+        "registry": "https://repo.fin.navercorp.com/repository/npm-hosted/"
+    }
+}

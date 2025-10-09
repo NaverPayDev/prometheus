@@ -1,0 +1,5 @@
+{
+    "extends": "@naverpay/tsconfig/internal-package.json",
+    "include": ["./src", "./typings", "./__tests__"],
+    "exclude": ["node_modules", "dist"]
+}
