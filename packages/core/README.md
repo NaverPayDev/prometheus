@@ -11,20 +11,24 @@ npm install @naverpay/prometheus-core
 ## 주요 기능
 
 ### 🎯 메트릭 관리
+
 - **히스토그램 등록**: HTTP 요청 지속시간 등을 측정하는 히스토그램 메트릭 생성
 - **트레이싱**: 요청 시작부터 종료까지의 시간 측정 및 라벨 관리
 - **게이지 메트릭**: 서비스 상태 표시를 위한 업타임 게이지
 
 ### 🔄 PM2 클러스터 지원
+
 - **프로세스 간 통신**: PM2 message bus를 통한 메트릭 수집
 - **메트릭 집계**: 여러 워커 프로세스의 메트릭을 자동으로 집계
 - **연결 관리**: PM2 연결 생성 및 해제
 
 ### 🛣️ Next.js 통합
+
 - **라우트 정규화**: Next.js 라우트 매니페스트를 활용한 동적 라우트 그룹화
 - **정적 파일 처리**: Next.js 정적 파일 요청 분류
 
 ### 🚦 유틸리티
+
 - **경로 필터링**: 헬스체크, 메트릭 엔드포인트 등 불필요한 요청 제외
 - **상태 코드 그룹화**: HTTP 상태 코드를 메트릭 수집에 적합한 형태로 변환
 
@@ -33,6 +37,7 @@ npm install @naverpay/prometheus-core
 ### 메트릭 관리
 
 #### `registerHistogram(type, name, labelNames, buckets?)`
+
 새로운 히스토그램 메트릭을 등록합니다.
 
 ```typescript
@@ -47,6 +52,7 @@ registerHistogram(
 ```
 
 #### `startTraceHistogram(type, labelValues)`
+
 히스토그램 타이머를 시작합니다.
 
 ```typescript
@@ -63,6 +69,7 @@ endTraceHistogram(trace, { status_code: '200' })
 ```
 
 #### `registerGaugeUp(prefix?)`
+
 서비스 상태를 나타내는 up 게이지를 등록합니다.
 
 ```typescript
@@ -74,6 +81,7 @@ registerGaugeUp('myservice_') // myservice_up 메트릭 생성
 ### PM2 커넥터
 
 #### `pm2Connector.connect()`
+
 PM2 message bus에 연결합니다.
 
 ```typescript
@@ -83,6 +91,7 @@ await pm2Connector.connect()
 ```
 
 #### `pm2Connector.getMetrics()`
+
 모든 PM2 프로세스의 메트릭을 수집하고 집계합니다.
 
 ```typescript
@@ -91,6 +100,7 @@ console.log(metrics) // Prometheus 형식의 메트릭 문자열
 ```
 
 #### `pm2Connector.disconnect()`
+
 PM2 연결을 해제하고 메트릭 레지스트리를 초기화합니다.
 
 ```typescript
@@ -100,6 +110,7 @@ await pm2Connector.disconnect()
 ### Next.js 유틸리티
 
 #### `getNextRoutesManifest()`
+
 Next.js 라우트 매니페스트 파일을 읽어 파싱합니다.
 
 ```typescript
@@ -109,6 +120,7 @@ const { basePath, routes } = getNextRoutesManifest()
 ```
 
 #### `createNextRoutesUrlGroup()`
+
 Next.js URL을 라우트 패턴으로 정규화하는 함수를 생성합니다.
 
 ```typescript
@@ -122,6 +134,7 @@ console.log(normalizeUrl('/api/data.json')) // 'STATIC'
 ### 유틸리티 함수
 
 #### `isBypassPath(path)`
+
 경로가 메트릭 수집에서 제외되어야 하는지 확인합니다.
 
 ```typescript
@@ -134,6 +147,7 @@ console.log(isBypassPath('/api/users')) // false
 ```
 
 #### `getStatusCodeGroup(statusCode)`
+
 HTTP 상태 코드를 메트릭 수집용으로 그룹화합니다.
 
 ```typescript
@@ -146,6 +160,7 @@ console.log(getStatusCodeGroup(500)) // 500
 ```
 
 #### `enableCollectDefaultMetrics()`
+
 Node.js 기본 메트릭 수집을 활성화합니다.
 
 ```typescript
@@ -158,19 +173,25 @@ enableCollectDefaultMetrics()
 ## 상수
 
 ### `DEFAULT_METRICS_PATH`
+
 기본 메트릭 엔드포인트 경로입니다.
+
 ```typescript
 console.log(DEFAULT_METRICS_PATH) // '/metrics'
 ```
 
 ### `BUCKETS`
+
 기본 히스토그램 버킷 설정입니다.
+
 ```typescript
 console.log(BUCKETS) // [0.1, 0.3, 0.95, 1.2, 3, 5, 7, 9, 10, 20, 30, 40, 50, 60, 70]
 ```
 
 ### `DEFAULT_METRICS_TYPE`
+
 기본 메트릭 타입 열거형입니다.
+
 ```typescript
 console.log(DEFAULT_METRICS_TYPE.HTTP_REQUEST) // 'http_request'
 console.log(DEFAULT_METRICS_TYPE.HTTP_API_REQUEST) // 'http_api_request'
@@ -244,6 +265,7 @@ async function handleRequest(req, res) {
 ## 타입 정의
 
 ### `CommonPrometheusExporterOptions`
+
 ```typescript
 interface CommonPrometheusExporterOptions {
   /** PM2 클러스터링 지원 활성화 여부 */
@@ -258,11 +280,13 @@ interface CommonPrometheusExporterOptions {
 ```
 
 ### `PM2MessageHandler`
+
 ```typescript
 type PM2MessageHandler<T = any, R = any> = (data: T) => Promise<R> | R
 ```
 
 ### `PM2GetMessageOptions`
+
 ```typescript
 interface PM2GetMessageOptions {
   /** 프로세스 필터 함수 */
