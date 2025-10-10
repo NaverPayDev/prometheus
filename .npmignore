@@ -2,3 +2,4 @@
 .changeset
 .husky
 .lefthook
+tooling/*

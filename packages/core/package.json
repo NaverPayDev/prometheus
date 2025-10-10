@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/prometheus-core",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "description": "Core utilities for Prometheus monitoring and metrics collection.",
     "keywords": [
         "prometheus",
@@ -51,8 +51,5 @@
     "peerDependencies": {
         "pm2": ">=5.3.0 <6.0.0"
     },
-    "packageManager": "pnpm@10.6.5",
-    "publishConfig": {
-        "registry": "https://repo.fin.navercorp.com/repository/npm-hosted/"
-    }
+    "packageManager": "pnpm@10.6.5"
 }

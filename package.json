@@ -1,37 +1,35 @@
 {
-    "name": "ts-monorepo-template",
+    "name": "@naverpay/prometheus",
     "version": "1.0.0",
     "private": true,
-    "description": "ts-monorepo-template by @naverpaydev",
+    "description": "nodejs prometheus exporter utilities by @naverpaydev",
     "keywords": [
         "naver",
         "naver-financial",
-        "monorepo",
-        "monorepo-template",
-        "template",
-        "typescript"
+        "prometheus",
+        "prometheus-exporter"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/NaverPayDev/ts-monorepo-template.git"
+        "url": "https://github.com/NaverPayDev/prometheus.git"
     },
     "author": "@NaverPayDev/frontend",
     "type": "module",
     "scripts": {
-        "build": "turbo run build",
-        "clean": "turbo run clean && rm -rf ./node_modules && pnpm i",
-        "lint": "eslint . --cache --cache-location .cache/.eslintcache",
-        "lint:fix": "pnpm run lint --fix",
-        "markdownlint": "markdownlint '**/*.md' '#.changeset' '#**/CHANGELOG.md'",
-        "markdownlint:fix": "markdownlint --fix '**/*.md' '#.changeset' '#**/CHANGELOG.md'",
-        "postinstall": "lefthook install",
-        "prettier": "prettier --check . --cache --cache-location .cache/.prettiercache",
-        "prettier:fix": "prettier --write . --cache --cache-location .cache/.prettiercache",
-        "release": "pnpm run build && changeset publish",
-        "release:canary": "pnpm run build && changeset publish --no-git-tag",
-        "test": "turbo run test",
-        "typecheck": "turbo run typecheck"
-    },
+    "build": "turbo run build",
+    "clean": "turbo run clean && rm -rf ./node_modules && pnpm i",
+    "postinstall": "lefthook install",
+    "lint": "eslint . --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "pnpm run lint --fix",
+    "markdownlint": "markdownlint '**/*.md' '#.changeset' '#**/CHANGELOG.md'",
+    "markdownlint:fix": "markdownlint --fix '**/*.md' '#.changeset' '#**/CHANGELOG.md'",
+    "prettier": "prettier --check . --cache --cache-location .cache/.prettiercache",
+    "prettier:fix": "prettier --write . --cache --cache-location .cache/.prettiercache",
+    "release": "pnpm run build && changeset publish",
+    "release:canary": "pnpm run build && changeset publish --no-git-tag",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
+  },
     "lint-staged": {
         "**/*.{js,jsx,ts,tsx}": [
             "prettier --write",

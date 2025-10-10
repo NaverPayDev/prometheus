@@ -1,7 +1,7 @@
 {
     "name": "@naverpay/prometheus-next",
-    "version": "0.0.1",
-    "description": "",
+    "version": "0.0.0",
+    "description": "Next.js integration server with Prometheus metrics collection and PM2 cluster support.",
     "keywords": [
         "nextjs",
         "prometheus",
@@ -48,8 +48,5 @@
     "peerDependencies": {
         "next": ">=13.0.0"
     },
-    "packageManager": "pnpm@10.6.5",
-    "publishConfig": {
-        "registry": "https://repo.fin.navercorp.com/repository/npm-hosted/"
-    }
+    "packageManager": "pnpm@10.6.5"
 }
