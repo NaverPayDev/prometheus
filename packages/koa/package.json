@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/prometheus-koa",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "description": "Koa middleware for Prometheus metrics integration.",
     "keywords": [
         "koa",
@@ -53,5 +53,4 @@
         "@koa/router": ">=14.0.0"
     },
     "packageManager": "pnpm@10.6.5"
-
 }

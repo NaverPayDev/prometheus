@@ -11,21 +11,25 @@ npm install @naverpay/prometheus-next
 ## 주요 기능
 
 ### 🚀 통합 서버
+
 - **올인원**: Next.js 서버와 메트릭 수집이 하나의 서버로 통합
 - **자동 설정**: 메트릭 수집을 위한 별도 설정 없이 즉시 사용 가능
 - **내장 엔드포인트**: `/metrics` 엔드포인트 자동 생성
 
 ### 🎯 Next.js 최적화
+
 - **라우트 정규화**: Next.js 라우트 매니페스트 기반 자동 경로 그룹화
 - **정적 파일 처리**: `_next/` 및 정적 파일 요청 자동 분류
 - **동적 라우트**: `[id]`, `[...slug]` 등 동적 라우트 자동 인식
 
 ### 🔄 PM2 클러스터 지원
+
 - **멀티 프로세스**: PM2 클러스터 환경에서 메트릭 자동 집계
 - **분산 수집**: 각 워커 프로세스의 메트릭을 통합
 - **고가용성**: 프로세스 장애 시에도 다른 프로세스의 메트릭 수집 지속
 
 ### 🚦 스마트 필터링
+
 - **자동 바이패스**: 웹팩 HMR, 중복 슬래시 등 자동 제외
 - **커스텀 필터**: 사용자 정의 바이패스 로직 지원
 - **성능 최적화**: 불필요한 요청의 메트릭 수집 방지
@@ -356,11 +360,13 @@ start().catch(console.error)
 모든 HTTP 요청의 응답 시간을 히스토그램으로 수집합니다.
 
 **라벨:**
+
 - `status_code`: HTTP 상태 코드 그룹
 - `method`: HTTP 메서드
 - `path`: 정규화된 요청 경로
 
 **예시 메트릭:**
+
 ```
 http_request_duration_seconds_bucket{status_code="200",method="GET",path="/",le="0.1"} 145
 http_request_duration_seconds_bucket{status_code="200",method="GET",path="/user/[id]",le="0.5"} 23
