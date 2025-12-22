@@ -13,8 +13,13 @@ import {getKoaMetricsMiddleware} from './middleware/metrics'
 import {getKoaNoopMiddleware} from './middleware/noop'
 import {getKoaMetricsRouter} from './router/metrics'
 import {getNoopRouter} from './router/noop'
+import {getKoaStandaloneMetricsRouter} from './router/standalone'
 
 import type {KoaPrometheusExporterOptions} from './types'
+
+async function noop() {
+    // No operation
+}
 
 /**
  * Creates a Koa Prometheus exporter with middleware and router
@@ -22,7 +27,8 @@ import type {KoaPrometheusExporterOptions} from './types'
  * @returns Object containing router, middleware, and disconnect function
  */
 export async function createKoaPrometheusExporter({
-    pm2,
+    enabled = true,
+    pm2 = false,
     nextjs = true,
     metricsPath,
     collectDefaultMetrics = true,
@@ -30,26 +36,26 @@ export async function createKoaPrometheusExporter({
     normalizePath,
     formatStatusCode,
 }: KoaPrometheusExporterOptions) {
-    if (!pm2) {
-        const router = getNoopRouter({metricsPath})
-        const middleware = getKoaNoopMiddleware()
+    // Disabled: return noop
+    if (!enabled) {
         return {
-            router,
-            middleware,
-            disconnect: async () => {
-                // noop
-            },
+            router: getNoopRouter({metricsPath}),
+            middleware: getKoaNoopMiddleware(),
+            disconnect: noop,
         }
     }
 
+    // PM2 cluster mode: connect to PM2
     if (pm2) {
         await pm2Connector.connect()
     }
 
+    // Register default metrics
     if (collectDefaultMetrics) {
         enableCollectDefaultMetrics()
     }
 
+    // Register HTTP request histogram
     registerHistogram(
         DEFAULT_METRICS_TYPE.HTTP_REQUEST,
         DEFAULT_METRICS_NAMES.http_request,
@@ -60,11 +66,14 @@ export async function createKoaPrometheusExporter({
     registerGaugeUp()
 
     const middleware = getKoaMetricsMiddleware({nextjs, bypass, normalizePath, formatStatusCode})
-    const router = await getKoaMetricsRouter({metricsPath})
+
+    // PM2 mode: aggregated metrics from all workers
+    // Standalone mode: single process metrics
+    const router = pm2 ? await getKoaMetricsRouter({metricsPath}) : getKoaStandaloneMetricsRouter({metricsPath})
 
     return {
         router,
         middleware,
-        disconnect: pm2Connector.disconnect,
+        disconnect: pm2 ? pm2Connector.disconnect : noop,
     }
 }
