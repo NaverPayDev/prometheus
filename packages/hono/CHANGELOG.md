@@ -1,6 +1,6 @@
-# @naverpay/prometheus-core
+# @naverpay/prometheus-hono
 
-## 2.0.0
+## 1.0.0
 
 ### Major Changes
 
@@ -8,8 +8,7 @@
 
     PR: [add @naverpay/prometheus-hono](https://github.com/NaverPayDev/prometheus/pull/7)
 
-## 1.0.0
+### Patch Changes
 
-### Major Changes
-
-- 557e235: prometheus exporter 패키지를 출시합니다.
+- Updated dependencies [1510d53]
+  - @naverpay/prometheus-core@2.0.0
