@@ -36,7 +36,7 @@ npm install @naverpay/prometheus-koa
 
 ## 빠른 시작
 
-### 기본 설정
+### 기본 설정 (Standalone 모드)
 
 ```typescript
 import Koa from 'koa'
@@ -44,9 +44,8 @@ import { createKoaPrometheusExporter } from '@naverpay/prometheus-koa'
 
 const app = new Koa()
 
-// PM2 환경에서 실행하는 경우
+// 단일 프로세스 환경 (Docker, K8s 등)
 const { middleware, router, disconnect } = await createKoaPrometheusExporter({
-  pm2: true,
   metricsPath: '/metrics',
   collectDefaultMetrics: true,
 })
@@ -69,14 +68,31 @@ process.on('SIGTERM', async () => {
 })
 ```
 
-### PM2 없이 사용
+### PM2 클러스터 모드
 
 ```typescript
-const { middleware, router } = await createKoaPrometheusExporter({
-  pm2: false,
+const { middleware, router, disconnect } = await createKoaPrometheusExporter({
+  pm2: true, // PM2 클러스터 메트릭 집계 활성화
   metricsPath: '/metrics',
 })
 
+app.use(middleware)
+app.use(router.routes())
+
+process.on('SIGTERM', async () => {
+  await disconnect()
+})
+```
+
+### 메트릭 수집 비활성화 (개발 환경)
+
+```typescript
+const { middleware, router } = await createKoaPrometheusExporter({
+  enabled: process.env.NODE_ENV === 'production',
+  metricsPath: '/metrics',
+})
+
+// enabled: false일 경우 noop 미들웨어/라우터 반환
 app.use(middleware)
 app.use(router.routes())
 ```
@@ -91,8 +107,10 @@ Koa Prometheus 익스포터를 생성합니다.
 
 ```typescript
 interface KoaPrometheusExporterOptions {
-  /** PM2 클러스터링 지원 */
-  pm2: boolean
+  /** 메트릭 수집 활성화 여부 (기본값: true) */
+  enabled?: boolean
+  /** PM2 클러스터링 지원 (기본값: false) */
+  pm2?: boolean
   /** Next.js 라우트 정규화 활성화 */
   nextjs?: boolean
   /** 메트릭 엔드포인트 경로 */
@@ -381,10 +399,18 @@ const { middleware } = await createKoaPrometheusExporter({
 ### PM2 연결 실패
 
 ```typescript
-// PM2가 설치되지 않은 환경에서는 pm2: false로 설정
+// PM2 클러스터 환경에서만 pm2: true로 설정
 const { middleware } = await createKoaPrometheusExporter({
-  pm2: process.env.NODE_ENV === 'production',
+  pm2: process.env.PM2_HOME !== undefined,
   // 다른 설정들...
+})
+```
+
+### 개발 환경에서 메트릭 비활성화
+
+```typescript
+const { middleware } = await createKoaPrometheusExporter({
+  enabled: process.env.NODE_ENV === 'production',
 })
 ```
 

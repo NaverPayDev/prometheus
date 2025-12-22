@@ -107,6 +107,20 @@ PM2 연결을 해제하고 메트릭 레지스트리를 초기화합니다.
 await pm2Connector.disconnect()
 ```
 
+### Standalone 메트릭
+
+#### `getStandaloneMetrics()`
+
+PM2 없이 단일 프로세스에서 메트릭을 수집합니다.
+
+```typescript
+import { getStandaloneMetrics } from '@naverpay/prometheus-core'
+
+const { metrics, contentType } = await getStandaloneMetrics()
+console.log(metrics) // Prometheus 형식의 메트릭 문자열
+console.log(contentType) // 'text/plain; version=0.0.4; charset=utf-8'
+```
+
 ### Next.js 유틸리티
 
 #### `getNextRoutesManifest()`
@@ -268,8 +282,10 @@ async function handleRequest(req, res) {
 
 ```typescript
 interface CommonPrometheusExporterOptions {
-  /** PM2 클러스터링 지원 활성화 여부 */
-  pm2: boolean
+  /** 메트릭 수집 활성화 여부 (기본값: true) */
+  enabled?: boolean
+  /** PM2 클러스터링 지원 활성화 여부 (기본값: false) */
+  pm2?: boolean
   /** Next.js 라우트 정규화 활성화 여부 */
   nextjs?: boolean
   /** 메트릭 엔드포인트 경로 */
