@@ -6,9 +6,9 @@ import type {KoaPrometheusExporterOptions} from '../types'
 /**
  * Creates a Koa router with metrics endpoint
  * @param options - Configuration options including metrics path
- * @returns Promise resolving to configured Koa router
+ * @returns Configured Koa router
  */
-export async function getKoaMetricsRouter({
+export function getKoaMetricsRouter({
     metricsPath = DEFAULT_METRICS_PATH,
 }: Pick<KoaPrometheusExporterOptions, 'metricsPath'>) {
     const router = new Router()

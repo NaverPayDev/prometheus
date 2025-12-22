@@ -6,9 +6,9 @@ import type {HonoPrometheusExporterOptions} from '../types'
 /**
  * Creates a Hono app with metrics endpoint
  * @param options - Configuration options including metrics path
- * @returns Promise resolving to configured Hono app
+ * @returns Configured Hono app
  */
-export async function getHonoMetricsRouter({
+export function getHonoMetricsRouter({
     metricsPath = DEFAULT_METRICS_PATH,
 }: Pick<HonoPrometheusExporterOptions, 'metricsPath'>) {
     const app = new Hono()

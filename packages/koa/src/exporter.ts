@@ -69,7 +69,7 @@ export async function createKoaPrometheusExporter({
 
     // PM2 mode: aggregated metrics from all workers
     // Standalone mode: single process metrics
-    const router = pm2 ? await getKoaMetricsRouter({metricsPath}) : getKoaStandaloneMetricsRouter({metricsPath})
+    const router = pm2 ? getKoaMetricsRouter({metricsPath}) : getKoaStandaloneMetricsRouter({metricsPath})
 
     return {
         router,

@@ -69,7 +69,7 @@ export async function createHonoPrometheusExporter({
 
     // PM2 mode: aggregated metrics from all workers
     // Standalone mode: single process metrics
-    const router = pm2 ? await getHonoMetricsRouter({metricsPath}) : getHonoStandaloneMetricsRouter({metricsPath})
+    const router = pm2 ? getHonoMetricsRouter({metricsPath}) : getHonoStandaloneMetricsRouter({metricsPath})
 
     return {
         router,
