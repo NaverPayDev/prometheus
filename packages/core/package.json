@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/prometheus-core",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Core utilities for Prometheus monitoring and metrics collection.",
     "keywords": [
         "prometheus",

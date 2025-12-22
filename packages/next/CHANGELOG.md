@@ -1,5 +1,12 @@
 # @naverpay/prometheus-next
 
+## 1.0.1
+
+### Patch Changes
+
+- Updated dependencies [1510d53]
+    - @naverpay/prometheus-core@2.0.0
+
 ## 1.0.0
 
 ### Major Changes
