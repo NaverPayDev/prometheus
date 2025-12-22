@@ -10,6 +10,11 @@
         "prometheus-middleware"
     ],
     "author": "oneweek-lee",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NaverPayDev/prometheus",
+        "directory": "packages/koa"
+    },
     "sideEffects": false,
     "type": "module",
     "exports": {
