@@ -1,6 +1,6 @@
 # @naverpay/prometheus-hono
 
-## 2.0.0
+## 1.0.0
 
 ### Major Changes
 
@@ -11,4 +11,4 @@
 ### Patch Changes
 
 - Updated dependencies [1510d53]
-    - @naverpay/prometheus-core@2.0.0
+  - @naverpay/prometheus-core@2.0.0

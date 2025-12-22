@@ -2,10 +2,10 @@
 
 ## 1.0.1
 
-### Patch Changes
+### Major Changes
 
 - Updated dependencies [1510d53]
-    - @naverpay/prometheus-core@2.0.0
+  - @naverpay/prometheus-core@2.0.0
 
 ## 1.0.0
 
@@ -16,4 +16,4 @@
 ### Patch Changes
 
 - Updated dependencies [557e235]
-    - @naverpay/prometheus-core@1.0.0
+  - @naverpay/prometheus-core@1.0.0
