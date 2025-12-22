@@ -9,24 +9,24 @@ import {
     registerHistogram,
 } from '@naverpay/prometheus-core'
 
-import {getKoaMetricsMiddleware} from './middleware/metrics'
-import {getKoaNoopMiddleware} from './middleware/noop'
-import {getKoaMetricsRouter} from './router/metrics'
+import {getHonoMetricsMiddleware} from './middleware/metrics'
+import {getHonoNoopMiddleware} from './middleware/noop'
+import {getHonoMetricsRouter} from './router/metrics'
 import {getNoopRouter} from './router/noop'
-import {getKoaStandaloneMetricsRouter} from './router/standalone'
+import {getHonoStandaloneMetricsRouter} from './router/standalone'
 
-import type {KoaPrometheusExporterOptions} from './types'
+import type {HonoPrometheusExporterOptions} from './types'
 
 async function noop() {
     // No operation
 }
 
 /**
- * Creates a Koa Prometheus exporter with middleware and router
+ * Creates a Hono Prometheus exporter with middleware and router
  * @param options - Configuration options for the exporter
  * @returns Object containing router, middleware, and disconnect function
  */
-export async function createKoaPrometheusExporter({
+export async function createHonoPrometheusExporter({
     enabled = true,
     pm2 = false,
     nextjs = true,
@@ -35,12 +35,12 @@ export async function createKoaPrometheusExporter({
     bypass,
     normalizePath,
     formatStatusCode,
-}: KoaPrometheusExporterOptions) {
+}: HonoPrometheusExporterOptions) {
     // Disabled: return noop
     if (!enabled) {
         return {
             router: getNoopRouter({metricsPath}),
-            middleware: getKoaNoopMiddleware(),
+            middleware: getHonoNoopMiddleware(),
             disconnect: noop,
         }
     }
@@ -65,11 +65,11 @@ export async function createKoaPrometheusExporter({
 
     registerGaugeUp()
 
-    const middleware = getKoaMetricsMiddleware({nextjs, bypass, normalizePath, formatStatusCode})
+    const middleware = getHonoMetricsMiddleware({nextjs, bypass, normalizePath, formatStatusCode})
 
     // PM2 mode: aggregated metrics from all workers
     // Standalone mode: single process metrics
-    const router = pm2 ? getKoaMetricsRouter({metricsPath}) : getKoaStandaloneMetricsRouter({metricsPath})
+    const router = pm2 ? getHonoMetricsRouter({metricsPath}) : getHonoStandaloneMetricsRouter({metricsPath})
 
     return {
         router,
