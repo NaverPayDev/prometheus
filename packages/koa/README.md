@@ -115,7 +115,7 @@ interface KoaPrometheusExporterOptions {
   nextjs?: boolean
   /** 메트릭 엔드포인트 경로 */
   metricsPath?: string
-  /** 기본 Node.js 메트릭 수집 */
+  /** 기본 Node.js 메트릭 수집 (기본값: true) */
   collectDefaultMetrics?: boolean
   /** 요청 바이패스 함수 */
   bypass?: (context: Context) => boolean
