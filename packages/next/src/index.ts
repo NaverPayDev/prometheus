@@ -50,7 +50,7 @@ export async function createNextServerWithMetrics({
     bypass,
     normalizePath,
     formatStatusCode,
-    maxDepth = Number.MAX_SAFE_INTEGER,
+    maxDepth,
 }: NextjsPrometheusExporterOptions) {
     const app = next(nextOptions)
     await app.prepare()
