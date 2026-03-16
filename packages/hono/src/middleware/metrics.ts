@@ -20,8 +20,8 @@ export function getHonoMetricsMiddleware({
     bypass,
     normalizePath,
     formatStatusCode,
-    maxDepth = Number.MAX_SAFE_INTEGER,
-    trimDynamic = false,
+    maxDepth,
+    trimDynamic,
 }: Pick<
     HonoPrometheusExporterOptions,
     'nextjs' | 'bypass' | 'normalizePath' | 'formatStatusCode' | 'maxDepth' | 'trimDynamic'

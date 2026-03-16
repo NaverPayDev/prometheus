@@ -21,8 +21,8 @@ export function getKoaMetricsMiddleware({
     bypass,
     normalizePath,
     formatStatusCode,
-    maxDepth = Number.MAX_SAFE_INTEGER,
-    trimDynamic = false,
+    maxDepth,
+    trimDynamic,
 }: Pick<
     KoaPrometheusExporterOptions,
     'nextjs' | 'bypass' | 'normalizePath' | 'formatStatusCode' | 'maxDepth' | 'trimDynamic'
