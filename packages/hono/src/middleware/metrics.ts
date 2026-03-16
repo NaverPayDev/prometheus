@@ -20,8 +20,12 @@ export function getHonoMetricsMiddleware({
     bypass,
     normalizePath,
     formatStatusCode,
-}: Pick<HonoPrometheusExporterOptions, 'nextjs' | 'bypass' | 'normalizePath' | 'formatStatusCode'>): MiddlewareHandler {
-    const normalizeNextRoutesPath = nextjs ? createNextRoutesUrlGroup() : undefined
+    maxDepth = Number.MAX_SAFE_INTEGER,
+}: Pick<
+    HonoPrometheusExporterOptions,
+    'nextjs' | 'bypass' | 'normalizePath' | 'formatStatusCode' | 'maxDepth'
+>): MiddlewareHandler {
+    const normalizeNextRoutesPath = nextjs ? createNextRoutesUrlGroup(maxDepth) : undefined
 
     const extendedNormalizePath = (context: Context) => {
         const url = new URL(context.req.url)

@@ -21,8 +21,12 @@ export function getKoaMetricsMiddleware({
     bypass,
     normalizePath,
     formatStatusCode,
-}: Pick<KoaPrometheusExporterOptions, 'nextjs' | 'bypass' | 'normalizePath' | 'formatStatusCode'>): Middleware {
-    const normalizeNextRoutesPath = nextjs ? createNextRoutesUrlGroup() : undefined
+    maxDepth = Number.MAX_SAFE_INTEGER,
+}: Pick<
+    KoaPrometheusExporterOptions,
+    'nextjs' | 'bypass' | 'normalizePath' | 'formatStatusCode' | 'maxDepth'
+>): Middleware {
+    const normalizeNextRoutesPath = nextjs ? createNextRoutesUrlGroup(maxDepth) : undefined
 
     const extendedNormalizePath = (context: Context) => {
         return normalizeNextRoutesPath?.(context.url) || normalizePath?.(context) || context.path
