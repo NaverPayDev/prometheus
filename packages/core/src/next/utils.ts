@@ -65,13 +65,10 @@ export function createNextRoutesUrlGroup(maxDepth: number) {
 
         for (const {regex, page} of routes) {
             if (regex.test(withoutBasePathUrl)) {
-                return `/${page
-                    .split('/')
-                    .slice(1, maxDepth + 1)
-                    .join('/')}`
+                return page
             }
         }
 
-        return withoutBasePathUrl
+        return typeof maxDepth === 'number' ? withoutBasePathUrl.split('/', maxDepth + 1).join('/') : withoutBasePathUrl
     }
 }
