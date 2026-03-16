@@ -26,15 +26,13 @@ export function getNextRoutesManifest() {
             throw new Error('No routes-manifest.json found')
         }
         const manifestJson = JSON.parse(fs.readFileSync(manifestsPath[0], 'utf8')) as RoutesManifest
-        const {basePath, dynamicRoutes: orgDynamicRoutes, staticRoutes: orgStaticRoutes} = manifestJson
-        const dynamicRoutes = orgDynamicRoutes.map(({page, regex}) => ({page, regex: new RegExp(regex)}))
-        const staticRoutes = orgStaticRoutes.map(({page, regex}) => ({page, regex: new RegExp(regex)}))
-        const routes = [...dynamicRoutes, ...staticRoutes]
-        return {basePath, dynamicRoutes, staticRoutes, routes}
+        const {basePath, dynamicRoutes, staticRoutes} = manifestJson
+        const routes = [...dynamicRoutes, ...staticRoutes].map(({page, regex}) => ({page, regex: new RegExp(regex)}))
+        return {basePath, routes}
     } catch {
         // eslint-disable-next-line no-console
         console.warn('No routes manifest found. Please make sure you are running in a Next.js environment.')
-        return {basePath: '', dynamicRoutes: [], staticRoutes: [], routes: []}
+        return {basePath: '', routes: []}
     }
 }
 
@@ -42,8 +40,8 @@ export function getNextRoutesManifest() {
  * Creates a function that normalizes Next.js URLs to route patterns for metrics
  * @returns Function that takes a URL and returns the normalized route pattern
  */
-export function createNextRoutesUrlGroup(maxDepth: number, trimDynamic: boolean) {
-    const {basePath, dynamicRoutes, routes} = getNextRoutesManifest()
+export function createNextRoutesUrlGroup(maxDepth: number) {
+    const {basePath, routes} = getNextRoutesManifest()
 
     return function getUrlGroup(originalUrl: string) {
         const [orgRoute] = originalUrl.split('?')
@@ -65,14 +63,12 @@ export function createNextRoutesUrlGroup(maxDepth: number, trimDynamic: boolean)
             return 'STATIC'
         }
 
-        for (const it of routes) {
-            if (it.regex.test(withoutBasePathUrl)) {
-                return dynamicRoutes.includes(it) && !trimDynamic
-                    ? it.page
-                    : `/${it.page
-                          .split('/')
-                          .slice(1, maxDepth + 1)
-                          .join('/')}`
+        for (const {regex, page} of routes) {
+            if (regex.test(withoutBasePathUrl)) {
+                return `/${page
+                    .split('/')
+                    .slice(1, maxDepth + 1)
+                    .join('/')}`
             }
         }
 

@@ -12,6 +12,4 @@ export interface CommonPrometheusExporterOptions {
     collectDefaultMetrics?: boolean
     /** Max number to trim path */
     maxDepth?: number
-    /** Whether to trim dynamic path */
-    trimDynamic?: boolean
 }
