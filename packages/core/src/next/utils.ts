@@ -3,6 +3,8 @@ import path from 'node:path'
 
 import {glob} from 'glob'
 
+import {trimUrl} from '../metrics/util'
+
 interface RouteInfo {
     page: string
     regex: string
@@ -69,6 +71,6 @@ export function createNextRoutesUrlGroup(maxDepth: number) {
             }
         }
 
-        return typeof maxDepth === 'number' ? withoutBasePathUrl.split('/', maxDepth + 1).join('/') : withoutBasePathUrl
+        return trimUrl(withoutBasePathUrl, maxDepth)
     }
 }

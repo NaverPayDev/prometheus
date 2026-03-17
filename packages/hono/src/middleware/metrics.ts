@@ -4,6 +4,7 @@ import {
     getStatusCodeGroup,
     isBypassPath,
     startTraceHistogram,
+    trimUrl,
 } from '@naverpay/prometheus-core'
 
 import type {HonoPrometheusExporterOptions} from '../types'
@@ -29,7 +30,7 @@ export function getHonoMetricsMiddleware({
 
     const extendedNormalizePath = (context: Context) => {
         const url = new URL(context.req.url)
-        return normalizeNextRoutesPath?.(url.href) || normalizePath?.(context) || url.pathname
+        return normalizeNextRoutesPath?.(url.href) || normalizePath?.(context) || trimUrl(url.pathname, maxDepth)
     }
 
     return async (context, next) => {
