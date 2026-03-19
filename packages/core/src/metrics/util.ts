@@ -51,6 +51,14 @@ export function getStatusCodeGroup(statusCode: number) {
 }
 
 export const trimUrl = (url: string, maxDepth?: number) => {
-    const withStartingSlashUrl = url.startsWith('/') ? url : '/' + url
-    return typeof maxDepth === 'number' ? withStartingSlashUrl.split('/', maxDepth + 1).join('/') : withStartingSlashUrl
+    if (typeof maxDepth === 'number') {
+        if (maxDepth < 0) {
+            throw new Error('maxDepth must be bigger than 0')
+        }
+
+        const withStartingSlashUrl = url.startsWith('/') ? url : '/' + url
+        return withStartingSlashUrl.split('/', maxDepth + 1).join('/')
+    }
+
+    return url
 }
