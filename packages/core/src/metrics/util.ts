@@ -56,8 +56,18 @@ export const trimUrl = (url: string, maxDepth?: number) => {
             throw new Error('maxDepth must be bigger than 0')
         }
 
-        const withStartingSlashUrl = url.startsWith('/') ? url : '/' + url
-        return withStartingSlashUrl.split('/', maxDepth + 1).join('/')
+        let nonEmptyUrlTokenCount = 0
+        const urlTokens = []
+        for (const token of url.split('/')) {
+            urlTokens.push(token)
+            if (token) {
+                nonEmptyUrlTokenCount = nonEmptyUrlTokenCount + 1
+            }
+            if (nonEmptyUrlTokenCount === maxDepth) {
+                break
+            }
+        }
+        return urlTokens.join('/')
     }
 
     return url
