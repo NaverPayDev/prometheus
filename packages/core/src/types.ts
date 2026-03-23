@@ -11,5 +11,5 @@ export interface CommonPrometheusExporterOptions {
     /** Whether to collect default Node.js metrics */
     collectDefaultMetrics?: boolean
     /** URL depth limit for path normalization */
-    maxDepth?: number
+    maxNormalizedUrlDepth?: number
 }

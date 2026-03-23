@@ -35,7 +35,7 @@ export async function createHonoPrometheusExporter({
     bypass,
     normalizePath,
     formatStatusCode,
-    maxDepth,
+    maxNormalizedUrlDepth,
 }: HonoPrometheusExporterOptions) {
     // Disabled: return noop
     if (!enabled) {
@@ -71,7 +71,7 @@ export async function createHonoPrometheusExporter({
         bypass,
         normalizePath,
         formatStatusCode,
-        maxDepth,
+        maxNormalizedUrlDepth,
     })
 
     // PM2 mode: aggregated metrics from all workers
