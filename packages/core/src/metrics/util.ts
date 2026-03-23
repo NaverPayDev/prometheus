@@ -50,25 +50,18 @@ export function getStatusCodeGroup(statusCode: number) {
     }
 }
 
-export const trimUrl = (url: string, maxDepth?: number) => {
-    if (typeof maxDepth === 'number') {
-        if (maxDepth < 0) {
-            throw new Error('maxDepth must be bigger than 0')
-        }
-
-        let nonEmptyUrlTokenCount = 0
-        const urlTokens = []
-        for (const token of url.split('/')) {
-            urlTokens.push(token)
-            if (token) {
-                nonEmptyUrlTokenCount = nonEmptyUrlTokenCount + 1
-            }
-            if (nonEmptyUrlTokenCount === maxDepth) {
-                break
-            }
-        }
-        return urlTokens.join('/')
+/**
+ * Make URL start with slash and have maximum depth.
+ */
+export const normalizeUrlWithTrimming = (url: string, maxDepth = 0) => {
+    if (maxDepth < 0) {
+        throw new Error('maxDepth must be bigger than 0')
     }
 
-    return url
+    if (maxDepth === 0) {
+        return url
+    }
+
+    const withStartingSlashUrl = url.startsWith('/') ? url : `/${url}`
+    return withStartingSlashUrl.split('/', maxDepth + 1).join('/')
 }

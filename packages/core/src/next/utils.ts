@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import {glob} from 'glob'
 
-import {trimUrl} from '../metrics/util'
+import {normalizeUrlWithTrimming} from '../metrics/util'
 
 interface RouteInfo {
     page: string
@@ -71,6 +71,6 @@ export function createNextRoutesUrlGroup(maxDepth: number) {
             }
         }
 
-        return trimUrl(withoutBasePathUrl, maxDepth)
+        return normalizeUrlWithTrimming(withoutBasePathUrl, maxDepth)
     }
 }
