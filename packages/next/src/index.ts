@@ -50,6 +50,7 @@ export async function createNextServerWithMetrics({
     bypass,
     normalizePath,
     formatStatusCode,
+    maxNormalizedUrlDepth,
 }: NextjsPrometheusExporterOptions) {
     const app = next(nextOptions)
     await app.prepare()
@@ -73,7 +74,7 @@ export async function createNextServerWithMetrics({
         registerGaugeUp()
     }
 
-    const normalizeNextRoutesPath = createNextRoutesUrlGroup()
+    const normalizeNextRoutesPath = createNextRoutesUrlGroup(maxNormalizedUrlDepth)
 
     const server = http.createServer(async (request, response) => {
         if (!pm2) {

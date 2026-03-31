@@ -35,6 +35,7 @@ export async function createKoaPrometheusExporter({
     bypass,
     normalizePath,
     formatStatusCode,
+    maxNormalizedUrlDepth,
 }: KoaPrometheusExporterOptions) {
     // Disabled: return noop
     if (!enabled) {
@@ -65,7 +66,7 @@ export async function createKoaPrometheusExporter({
 
     registerGaugeUp()
 
-    const middleware = getKoaMetricsMiddleware({nextjs, bypass, normalizePath, formatStatusCode})
+    const middleware = getKoaMetricsMiddleware({nextjs, bypass, normalizePath, formatStatusCode, maxNormalizedUrlDepth})
 
     // PM2 mode: aggregated metrics from all workers
     // Standalone mode: single process metrics

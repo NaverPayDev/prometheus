@@ -35,6 +35,7 @@ export async function createHonoPrometheusExporter({
     bypass,
     normalizePath,
     formatStatusCode,
+    maxNormalizedUrlDepth,
 }: HonoPrometheusExporterOptions) {
     // Disabled: return noop
     if (!enabled) {
@@ -65,7 +66,13 @@ export async function createHonoPrometheusExporter({
 
     registerGaugeUp()
 
-    const middleware = getHonoMetricsMiddleware({nextjs, bypass, normalizePath, formatStatusCode})
+    const middleware = getHonoMetricsMiddleware({
+        nextjs,
+        bypass,
+        normalizePath,
+        formatStatusCode,
+        maxNormalizedUrlDepth,
+    })
 
     // PM2 mode: aggregated metrics from all workers
     // Standalone mode: single process metrics

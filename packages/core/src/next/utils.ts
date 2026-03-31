@@ -3,6 +3,8 @@ import path from 'node:path'
 
 import {glob} from 'glob'
 
+import {normalizeUrlWithTrimming} from '../metrics/util'
+
 interface RouteInfo {
     page: string
     regex: string
@@ -40,7 +42,7 @@ export function getNextRoutesManifest() {
  * Creates a function that normalizes Next.js URLs to route patterns for metrics
  * @returns Function that takes a URL and returns the normalized route pattern
  */
-export function createNextRoutesUrlGroup() {
+export function createNextRoutesUrlGroup(maxNormalizedUrlDepth: number) {
     const {basePath, routes} = getNextRoutesManifest()
 
     return function getUrlGroup(originalUrl: string) {
@@ -69,6 +71,6 @@ export function createNextRoutesUrlGroup() {
             }
         }
 
-        return withoutBasePathUrl
+        return normalizeUrlWithTrimming(withoutBasePathUrl, maxNormalizedUrlDepth)
     }
 }
