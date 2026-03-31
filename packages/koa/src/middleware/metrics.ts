@@ -4,7 +4,7 @@ import {
     getStatusCodeGroup,
     isBypassPath,
     startTraceHistogram,
-    trimUrl,
+    normalizeUrlWithTrimming,
 } from '@naverpay/prometheus-core'
 import onFinished from 'on-finished'
 
@@ -30,7 +30,9 @@ export function getKoaMetricsMiddleware({
     const normalizeNextRoutesPath = nextjs ? createNextRoutesUrlGroup(maxNormalizedUrlDepth) : undefined
 
     const extendedNormalizePath = (context: Context) => {
-        return normalizeNextRoutesPath?.(context.url) || normalizePath?.(context) || trimUrl(context.path)
+        return (
+            normalizeNextRoutesPath?.(context.url) || normalizePath?.(context) || normalizeUrlWithTrimming(context.path)
+        )
     }
 
     return async (context, next) => {
