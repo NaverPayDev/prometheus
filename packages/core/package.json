@@ -7,12 +7,12 @@
         "prometheus-exporter",
         "prometheus-core"
     ],
-    "author": "oneweek-lee",
     "repository": {
         "type": "git",
         "url": "https://github.com/NaverPayDev/prometheus",
         "directory": "packages/core"
     },
+    "author": "oneweek-lee",
     "sideEffects": false,
     "type": "module",
     "exports": {
