@@ -42,7 +42,7 @@ export function getNextRoutesManifest() {
  * Creates a function that normalizes Next.js URLs to route patterns for metrics
  * @returns Function that takes a URL and returns the normalized route pattern
  */
-export function createNextRoutesUrlGroup(maxNormalizedUrlDepth: number) {
+export function createNextRoutesUrlGroup(maxNormalizedUrlDepth = 0) {
     const {basePath, routes} = getNextRoutesManifest()
 
     return function getUrlGroup(originalUrl: string) {
