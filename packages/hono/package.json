@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/prometheus-hono",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Hono middleware for Prometheus metrics integration.",
     "keywords": [
         "hono",
