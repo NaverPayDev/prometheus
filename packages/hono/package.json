@@ -38,7 +38,7 @@
     ],
     "scripts": {
         "build": "pnpm clean && vite build",
-        "clean": "rm -rf dist"
+        "clean": "rimraf dist"
     },
     "dependencies": {
         "@naverpay/es-http-status-codes": "^0.0.4",

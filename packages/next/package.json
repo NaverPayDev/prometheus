@@ -37,7 +37,7 @@
     ],
     "scripts": {
         "build": "pnpm clean && vite build",
-        "clean": "rm -rf dist"
+        "clean": "rimraf dist"
     },
     "dependencies": {
         "@naverpay/prometheus-core": "workspace:*",

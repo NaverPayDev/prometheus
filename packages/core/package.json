@@ -36,7 +36,7 @@
     ],
     "scripts": {
         "build": "pnpm clean && vite build",
-        "clean": "rm -rf dist"
+        "clean": "rimraf dist"
     },
     "overrides": {
         "vm2<3.9.17": "3.9.17"
