@@ -116,8 +116,8 @@ interface HonoPrometheusExporterOptions {
   collectDefaultMetrics?: boolean
   /** 요청 바이패스 함수 */
   bypass?: (context: Context) => boolean
-  /** 경로 정규화 함수 */
-  normalizePath?: (context: Context) => string
+  /** 경로 정규화 함수 (undefined 반환 시 Next.js 그룹핑/기본 정규화로 위임) */
+  normalizePath?: (context: Context) => string | undefined
   /** 상태 코드 포맷팅 함수 */
   formatStatusCode?: (context: Context) => string
 }
