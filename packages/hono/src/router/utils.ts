@@ -50,7 +50,9 @@ export function createNormalizedHonoRouterPath<E extends Env, S extends Schema, 
     app: Hono<E, S, B>,
     prefix = '',
 ) {
-    const paths = getHonoRouterPaths(app, prefix)
+    // getHonoRouterPaths에 prefix를 넘기지 않는다. prefix 부착은 createPathTesters가 전담하며,
+    // 양쪽에 모두 넘기면 prefix가 두 번 붙어(`/prefix/prefix/...`) 정규식 매칭이 깨진다.
+    const paths = getHonoRouterPaths(app)
     const testers = createPathTesters(paths, prefix)
 
     return function getNormalizedHonoRouterPath(pathname: string) {
