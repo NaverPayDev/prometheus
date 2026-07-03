@@ -48,14 +48,15 @@
     "devDependencies": {
         "@naverpay/pite": "catalog:",
         "@naverpay/tsconfig": "workspace:*",
-        "@types/koa": "^2.13.5",
+        "@types/koa": "^3.0.0",
         "@types/koa__router": "^12.0.4",
         "@types/node": "catalog:",
         "@types/on-finished": "catalog:",
         "vite": "catalog:"
     },
     "peerDependencies": {
-        "@koa/router": ">=14.0.0"
+        "@koa/router": ">=14.0.0",
+        "koa": ">=2.0.0"
     },
     "packageManager": "pnpm@10.6.5"
 }

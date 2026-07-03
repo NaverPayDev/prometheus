@@ -428,9 +428,10 @@ app.use(metricsRouter.routes()) // 마지막에 추가
 
 ## 요구 사항
 
-- Node.js 16.0.0 이상
+- Node.js 16.0.0 이상 (Koa 3.x 사용 시 18.0.0 이상)
 - TypeScript 4.5 이상
-- Koa 2.0.0 이상
+- Koa 2.x 또는 3.x
+- @koa/router 14.0.0 이상
 
 ## 라이센스
 
