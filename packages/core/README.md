@@ -316,9 +316,9 @@ interface PM2GetMessageOptions {
 
 ## 요구 사항
 
-- Node.js 16.0.0 이상
+- Node.js 16.0.0 이상 (PM2 7.x 사용 시 18.0.0 이상)
 - TypeScript 4.5 이상
-- PM2 사용 시: PM2 5.0.0 이상
+- PM2는 선택적(optional) peer dependency이며, PM2 클러스터 모드 사용 시에만 필요합니다 (PM2 5.3.0 이상, 6.x·7.x 포함)
 
 ## 라이센스
 
