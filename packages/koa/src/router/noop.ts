@@ -9,7 +9,9 @@ import type {KoaPrometheusExporterOptions} from '../types'
  * @param options - Configuration options including metrics path
  * @returns Configured Koa router
  */
-export function getNoopRouter({metricsPath = DEFAULT_METRICS_PATH}: Pick<KoaPrometheusExporterOptions, 'metricsPath'>) {
+export function getNoopRouter({
+    metricsPath = DEFAULT_METRICS_PATH,
+}: Pick<KoaPrometheusExporterOptions, 'metricsPath'>): Router {
     const router = new Router()
     router.get(metricsPath, async (context) => {
         context.status = HttpStatusCodes.OK

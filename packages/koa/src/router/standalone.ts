@@ -10,7 +10,7 @@ import type {KoaPrometheusExporterOptions} from '../types'
  */
 export function getKoaStandaloneMetricsRouter({
     metricsPath = DEFAULT_METRICS_PATH,
-}: Pick<KoaPrometheusExporterOptions, 'metricsPath'>) {
+}: Pick<KoaPrometheusExporterOptions, 'metricsPath'>): Router {
     const router = new Router()
     router.get(metricsPath, async (context) => {
         const {metrics, contentType} = await getStandaloneMetrics()

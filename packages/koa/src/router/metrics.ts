@@ -10,7 +10,7 @@ import type {KoaPrometheusExporterOptions} from '../types'
  */
 export function getKoaMetricsRouter({
     metricsPath = DEFAULT_METRICS_PATH,
-}: Pick<KoaPrometheusExporterOptions, 'metricsPath'>) {
+}: Pick<KoaPrometheusExporterOptions, 'metricsPath'>): Router {
     const router = new Router()
     router.get(metricsPath, async (context) => {
         const {metrics, metricsRegistry} = await pm2Connector.getMetrics()
