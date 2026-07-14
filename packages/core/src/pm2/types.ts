@@ -1,6 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type {ProcessDescription} from 'pm2'
+/**
+ * Minimal subset of pm2's `ProcessDescription` fields actually used by this
+ * package, redeclared locally so consumers without pm2 installed don't hit
+ * `Cannot find module 'pm2'` when resolving this package's type declarations
+ */
+export interface PM2ProcessDescription {
+    /** Process name registered in PM2 */
+    name?: string
+    /** PM2-assigned process ID */
+    pm_id?: number
+}
 
 /** Handler function type for PM2 messages */
 export type PM2MessageHandler<T = any, R = any> = (data: T) => Promise<R> | R
@@ -8,7 +18,7 @@ export type PM2MessageHandler<T = any, R = any> = (data: T) => Promise<R> | R
 /** Configuration options for getting PM2 messages */
 export interface PM2GetMessageOptions {
     /** Filter function to select which processes to query */
-    filter?: (process: ProcessDescription) => boolean
+    filter?: (process: PM2ProcessDescription) => boolean
     /** Whether to include self if not managed by PM2 */
     includeSelfIfUnmanaged?: boolean
     /** Timeout in milliseconds for message collection */
