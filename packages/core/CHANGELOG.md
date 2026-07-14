@@ -1,5 +1,13 @@
 # @naverpay/prometheus-core
 
+## 2.2.0
+
+### Minor Changes
+
+- b860225: fix(core): pm2 peer 범위 확대 및 optional 전환
+
+    PR: [fix(core): pm2 peer 범위 확대 및 optional 전환](https://github.com/NaverPayDev/prometheus/pull/20)
+
 ## 2.1.0
 
 ### Minor Changes

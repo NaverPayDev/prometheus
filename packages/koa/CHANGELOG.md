@@ -1,5 +1,18 @@
 # @naverpay/prometheus-koa
 
+## 2.2.0
+
+### Minor Changes
+
+- ff0618d: feat(koa): Koa 3.x 지원 추가
+
+    PR: [feat(koa): Koa 3.x 지원 추가](https://github.com/NaverPayDev/prometheus/pull/19)
+
+### Patch Changes
+
+- Updated dependencies [b860225]
+    - @naverpay/prometheus-core@2.2.0
+
 ## 2.1.0
 
 ### Minor Changes
