@@ -15,6 +15,7 @@
     },
     "author": "oneweek-lee",
     "sideEffects": false,
+    "type": "commonjs",
     "exports": {
         ".": {
             "import": {
