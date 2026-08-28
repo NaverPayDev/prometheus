@@ -2,6 +2,7 @@
     "name": "@naverpay/prometheus-core",
     "version": "2.2.1",
     "description": "Core utilities for Prometheus monitoring and metrics collection.",
+    "license": "MIT",
     "keywords": [
         "prometheus",
         "prometheus-exporter",
