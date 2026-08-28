@@ -15,15 +15,15 @@
     },
     "author": "oneweek-lee",
     "sideEffects": false,
-    "type": "module",
+    "type": "commonjs",
     "exports": {
         ".": {
             "import": {
-                "types": "./dist/esm/index.d.ts",
+                "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
             },
             "require": {
-                "types": "./dist/cjs/index.d.cts",
+                "types": "./dist/cjs/index.d.ts",
                 "default": "./dist/cjs/index.js"
             }
         },
@@ -31,7 +31,7 @@
     },
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
-    "types": "./dist/esm/index.d.ts",
+    "types": "./dist/esm/index.d.mts",
     "files": [
         "dist"
     ],
