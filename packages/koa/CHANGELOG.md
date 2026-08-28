@@ -1,5 +1,16 @@
 # @naverpay/prometheus-koa
 
+## 2.2.1
+
+### Patch Changes
+
+- fd82885: [#24] fix: type: module 제거로 Node require() 호환성 해결
+
+    PR: [[#24] fix: type: module 제거로 Node require() 호환성 해결](https://github.com/NaverPayDev/prometheus/pull/25)
+
+- Updated dependencies [fd82885]
+    - @naverpay/prometheus-core@2.2.1
+
 ## 2.2.0
 
 ### Minor Changes

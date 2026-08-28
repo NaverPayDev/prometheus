@@ -1,6 +1,6 @@
 {
     "name": "@naverpay/prometheus-next",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "Next.js integration server with Prometheus metrics collection and PM2 cluster support.",
     "keywords": [
         "nextjs",
